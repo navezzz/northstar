@@ -1,0 +1,27 @@
+:root { color-scheme: dark; --bg:#07111f; --panel:#0d1b2d; --line:#20334c; --text:#edf4ff; --muted:#8fa5be; --buy:#38d996; --watch:#f2bd4b; --avoid:#7e91a8; }
+* { box-sizing:border-box; }
+body { margin:0; background:radial-gradient(circle at top right,#102b45 0,var(--bg) 35%); color:var(--text); font:15px/1.5 Inter,ui-sans-serif,system-ui,sans-serif; min-height:100vh; }
+main { max-width:1320px; margin:auto; padding:52px 28px; }
+header,.panel-title { display:flex; justify-content:space-between; align-items:flex-end; gap:24px; }
+.eyebrow { color:#69a8ff; letter-spacing:.18em; font-size:12px; font-weight:700; margin:0; }
+h1 { font-size:48px; letter-spacing:-.04em; margin:4px 0 0; }
+.subtitle,.panel-title span,.disclaimer,.freshness { color:var(--muted); }
+.freshness { padding:9px 14px; border:1px solid var(--line); border-radius:999px; }
+.summary { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin:34px 0 18px; }
+.stat,.panel { background:color-mix(in srgb,var(--panel) 91%,transparent); border:1px solid var(--line); border-radius:16px; box-shadow:0 18px 48px #0004; }
+.stat { padding:18px 20px; }
+.stat strong { display:block; font-size:28px; }
+.stat span { color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.1em; }
+.panel { overflow:hidden; }
+.panel-title { padding:20px 22px; border-bottom:1px solid var(--line); }
+h2 { margin:0; font-size:18px; }
+.table-wrap { overflow-x:auto; }
+table { width:100%; border-collapse:collapse; }
+th,td { padding:15px 18px; text-align:left; border-bottom:1px solid var(--line); white-space:nowrap; }
+th { color:var(--muted); font-size:11px; letter-spacing:.08em; text-transform:uppercase; }
+td:last-child { white-space:normal; min-width:300px; color:#bbcade; }
+.badge { display:inline-block; font-weight:800; font-size:11px; letter-spacing:.08em; padding:5px 9px; border-radius:999px; }
+.BUY { color:var(--buy); background:#38d99619; }.WATCH { color:var(--watch); background:#f2bd4b19; }.AVOID,.NO_DATA { color:var(--avoid); background:#7e91a819; }
+.disclaimer { text-align:center; margin-top:22px; font-size:12px; }
+.error { color:#ff8e8e; padding:30px; }
+@media(max-width:800px){ main{padding:28px 14px} header{align-items:flex-start;flex-direction:column} h1{font-size:38px}.summary{grid-template-columns:repeat(2,1fr)} }

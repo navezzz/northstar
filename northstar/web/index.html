@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Northstar</title>
+    <link rel="stylesheet" href="assets/styles.css" />
+  </head>
+  <body>
+    <main>
+      <header>
+        <div>
+          <p class="eyebrow">DAILY DECISION SUPPORT</p>
+          <h1>Northstar</h1>
+          <p class="subtitle">A clear plan before the market opens.</p>
+        </div>
+        <div id="freshness" class="freshness">Loading latest run…</div>
+      </header>
+      <section class="summary" id="summary"></section>
+      <section class="panel">
+        <div class="panel-title">
+          <h2>Watchlist</h2>
+          <span>Signals use completed daily candles</span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Ticker</th><th>Signal</th><th>Close</th><th>Entry range</th><th>Stop</th><th>Risk/share</th><th>Shares</th><th>Why</th></tr></thead>
+            <tbody id="decisions"></tbody>
+          </table>
+        </div>
+      </section>
+      <p class="disclaimer">Research and decision support only. Prices are rule-derived, not predictions or financial advice.</p>
+    </main>
+    <script src="assets/app.js"></script>
+  </body>
+</html>
