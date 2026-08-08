@@ -1,12 +1,10 @@
 from __future__ import annotations
 
-import math
-
 import pandas as pd
 
 from northstar.models import Decision
 
-EXIT_RULE = "Sell on stop, or after a daily close below MA20; evaluate next session."
+EXIT_RULE = "Sell on stop, next open after a close below MA20, or after 20 sessions."
 
 
 def add_indicators(bars: pd.DataFrame) -> pd.DataFrame:
@@ -32,8 +30,6 @@ def add_indicators(bars: pd.DataFrame) -> pd.DataFrame:
 def evaluate(
     ticker: str,
     bars: pd.DataFrame,
-    portfolio_value: float = 100_000,
-    risk_pct: float = 0.005,
 ) -> Decision:
     if len(bars) < 201:
         as_of = str(bars.index[-1].date()) if not bars.empty else "unknown"
@@ -42,14 +38,13 @@ def evaluate(
             as_of=as_of,
             signal="NO_DATA",
             close=None,
-            entry_low=None,
-            entry_high=None,
+            reference_price=None,
             stop=None,
-            risk_per_share=None,
-            suggested_shares=0,
+            target=None,
             score=0,
             reason=f"Need at least 201 daily bars; found {len(bars)}.",
             exit_rule=EXIT_RULE,
+            valid_for="No order",
         )
 
     frame = add_indicators(bars)
@@ -80,26 +75,21 @@ def evaluate(
         signal = "AVOID"
         reason = "The trend-pullback entry conditions are not currently aligned."
 
-    entry_low = max(ma20, close - 0.25 * atr)
-    entry_high = close + 0.25 * atr
     swing_stop = float(row["SwingLow10"]) - 0.1 * atr
     atr_stop = close - 2 * atr
     stop = max(swing_stop, atr_stop)
-    risk_per_share = max(entry_high - stop, 0.01)
-    risk_budget = max(portfolio_value * risk_pct, 0)
-    shares = math.floor(risk_budget / risk_per_share) if signal in {"BUY", "WATCH"} else 0
+    stop = min(stop, close - 0.01)
 
     return Decision(
         ticker=ticker,
         as_of=str(frame.index[-1].date()),
         signal=signal,
         close=round(close, 2),
-        entry_low=round(entry_low, 2),
-        entry_high=round(entry_high, 2),
+        reference_price=round(close, 2),
         stop=round(stop, 2),
-        risk_per_share=round(risk_per_share, 2),
-        suggested_shares=max(shares, 0),
+        target=None,
         score=round(score, 1),
         reason=reason,
         exit_rule=EXIT_RULE,
+        valid_for="Next session open" if signal == "BUY" else "No order",
     )

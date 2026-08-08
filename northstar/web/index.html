@@ -16,20 +16,41 @@
         </div>
         <div id="freshness" class="freshness">Loading latest run…</div>
       </header>
+      <nav id="strategy-tabs" class="strategy-tabs" aria-label="Strategies"></nav>
+      <section class="strategy-intro">
+        <div><p class="eyebrow">ACTIVE STRATEGY</p><h2 id="strategy-name">—</h2></div>
+        <p id="strategy-description" class="subtitle"></p>
+      </section>
       <section class="summary" id="summary"></section>
       <section class="panel">
         <div class="panel-title">
-          <h2>Watchlist</h2>
-          <span>Signals use completed daily candles</span>
+          <h2>Next-session plan</h2>
+          <span>BUY is modeled at the next session open; WATCH and AVOID create no trade</span>
         </div>
         <div class="table-wrap">
           <table>
-            <thead><tr><th>Ticker</th><th>Signal</th><th>Close</th><th>Entry range</th><th>Stop</th><th>Risk/share</th><th>Shares</th><th>Why</th></tr></thead>
+            <thead><tr><th>Ticker</th><th>Action</th><th>Signal close</th><th>Execution</th><th>Stop</th><th>Target</th><th>Why</th></tr></thead>
             <tbody id="decisions"></tbody>
           </table>
         </div>
       </section>
-      <p class="disclaimer">Research and decision support only. Prices are rule-derived, not predictions or financial advice.</p>
+      <div class="two-col">
+        <section class="panel">
+          <div class="panel-title"><h2>$10K paper account</h2><span id="paper-period"></span></div>
+          <div id="paper-metrics" class="metrics"></div>
+          <div class="table-wrap"><table><thead><tr><th>Ticker</th><th>Entry</th><th>Price</th><th>Shares</th><th>Stop</th><th>Current</th></tr></thead><tbody id="positions"></tbody></table></div>
+        </section>
+        <section class="panel">
+          <div class="panel-title"><h2>Historical backtest</h2><span id="backtest-period"></span></div>
+          <div id="backtest-metrics" class="metrics"></div>
+          <p class="method-note">Signals execute at the next session open with 10 bps modeled cost, an initial stop, MA20 exit, and 20-session timeout. SPY is buy-and-hold over the same dates.</p>
+        </section>
+      </div>
+      <section class="panel history-panel">
+        <div class="panel-title"><h2>Paper trade history</h2><span>Completed model trades</span></div>
+        <div class="table-wrap"><table><thead><tr><th>Ticker</th><th>Entry</th><th>Exit</th><th>Shares</th><th>Return</th><th>P&amp;L</th><th>Reason</th></tr></thead><tbody id="history"></tbody></table></div>
+      </section>
+      <p class="disclaimer">Research and decision support only. Next-open fills are simulations, not predictions, guarantees, or financial advice.</p>
     </main>
     <script src="assets/app.js"></script>
   </body>

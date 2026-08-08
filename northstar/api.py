@@ -24,7 +24,7 @@ def health() -> dict:
 
 @app.get("/api/decisions/latest")
 def latest_decisions() -> dict:
-    result = store.latest()
+    result = store.latest_snapshot() or store.latest()
     if result is None:
         raise HTTPException(status_code=404, detail="No completed daily run yet")
     return result

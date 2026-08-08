@@ -8,12 +8,12 @@ import pandas as pd
 
 class MarketDataProvider(ABC):
     @abstractmethod
-    def daily_bars(self, ticker: str, years: int = 3) -> pd.DataFrame:
+    def daily_bars(self, ticker: str, years: int = 6) -> pd.DataFrame:
         """Return ascending OHLCV bars indexed by date."""
 
 
 class YahooFinanceProvider(MarketDataProvider):
-    def daily_bars(self, ticker: str, years: int = 3) -> pd.DataFrame:
+    def daily_bars(self, ticker: str, years: int = 6) -> pd.DataFrame:
         import yfinance as yf
 
         end = datetime.now(UTC).date() + timedelta(days=1)

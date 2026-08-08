@@ -14,9 +14,8 @@ def test_indicators_are_available_after_warmup():
 def test_decision_has_coherent_price_plan():
     decision = evaluate("AAPL", DemoProvider().daily_bars("AAPL"))
     assert decision.signal in {"BUY", "WATCH", "AVOID"}
-    assert decision.entry_low <= decision.entry_high
-    assert decision.stop < decision.entry_high
-    assert decision.risk_per_share > 0
+    assert decision.stop < decision.reference_price
+    assert decision.target is None
 
 
 def test_short_history_returns_no_data():

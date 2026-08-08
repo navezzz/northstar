@@ -33,9 +33,15 @@ Copy `.env.example` values into your shell or scheduler environment. Northstar
 does not load `.env` automatically in the MVP.
 
 - `NORTHSTAR_DB_PATH`: SQLite database location
-- `NORTHSTAR_WATCHLIST`: comma-separated US ticker symbols
-- `NORTHSTAR_PORTFOLIO_VALUE`: sizing reference only
-- `NORTHSTAR_RISK_PCT`: maximum theoretical risk budget per setup
+- `NORTHSTAR_WATCHLIST`: optional comma-separated universe override
+- `NORTHSTAR_PORTFOLIO_VALUE`: starting cash for backtest and paper replay
+- `NORTHSTAR_RISK_PCT`: maximum portfolio risk budget per entry
+- `NORTHSTAR_MAX_POSITIONS`: concurrent-position ceiling
+- `NORTHSTAR_MAX_POSITION_PCT`: maximum portfolio allocation per position
+- `NORTHSTAR_SLIPPAGE_BPS`: simulated slippage applied on each fill
+- `NORTHSTAR_FEE_PER_ORDER`: fixed simulated fee applied on each fill
+- `NORTHSTAR_BACKTEST_START`: historical comparison start date
+- `NORTHSTAR_PAPER_START`: paper-account replay start date
 
 ## Scheduling
 

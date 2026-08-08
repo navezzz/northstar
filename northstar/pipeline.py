@@ -16,6 +16,6 @@ def run_daily(
     decisions = []
     for ticker in watchlist or settings.watchlist:
         bars = provider.daily_bars(ticker)
-        decisions.append(evaluate(ticker, bars, settings.portfolio_value, settings.risk_pct))
+        decisions.append(evaluate(ticker, bars))
     run_id = store.save_completed_run(decisions)
     return run_id, decisions

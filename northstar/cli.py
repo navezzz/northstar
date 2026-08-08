@@ -3,10 +3,10 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
+from northstar.analysis import build_dashboard_snapshot
 from northstar.config import Settings
 from northstar.demo import DemoProvider
 from northstar.market_data import YahooFinanceProvider
-from northstar.pipeline import run_daily
 from northstar.site_export import export_site
 from northstar.store import Store
 
@@ -46,21 +46,25 @@ def main() -> None:
         if args.command == "daily-run" or getattr(args, "provider", None) == "yahoo"
         else DemoProvider()
     )
-    store = Store(settings.db_path)
-    run_id, decisions = run_daily(
+    snapshot = build_dashboard_snapshot(
         provider,
-        store,
         settings,
         _symbols(args.watchlist, settings.watchlist),
     )
-    print(f"Completed run {run_id} with {len(decisions)} decisions")
+    if args.command == "export-site":
+        export_site(snapshot, Path(args.output))
+        print(f"Static dashboard written to {Path(args.output).resolve()}")
+        return
+
+    store = Store(settings.db_path)
+    store.save_snapshot(snapshot)
+    decisions = snapshot["strategies"][0]["recommendations"]
+    print(f"Completed run {snapshot['run_id']} with {len(decisions)} decisions")
     for decision in decisions:
         print(
-            f"{decision.ticker:6} {decision.signal:7} score={decision.score:5.1f} {decision.reason}"
+            f"{decision['ticker']:6} {decision['signal']:7} "
+            f"score={decision['score']:5.1f} {decision['reason']}"
         )
-    if args.command == "export-site":
-        export_site(store.latest(), Path(args.output))
-        print(f"Static dashboard written to {Path(args.output).resolve()}")
 
 
 if __name__ == "__main__":

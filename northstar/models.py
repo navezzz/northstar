@@ -12,14 +12,13 @@ class Decision:
     as_of: str
     signal: Signal
     close: float | None
-    entry_low: float | None
-    entry_high: float | None
+    reference_price: float | None
     stop: float | None
-    risk_per_share: float | None
-    suggested_shares: int
+    target: float | None
     score: float
     reason: str
     exit_rule: str
+    valid_for: str
 
     def to_dict(self) -> dict:
         return asdict(self)

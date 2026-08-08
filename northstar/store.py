@@ -39,8 +39,27 @@ class Store:
                     payload TEXT NOT NULL,
                     PRIMARY KEY (run_id, ticker)
                 );
+                CREATE TABLE IF NOT EXISTS snapshots (
+                    run_id TEXT PRIMARY KEY,
+                    completed_at TEXT NOT NULL,
+                    payload TEXT NOT NULL
+                );
                 """
             )
+
+    def save_snapshot(self, snapshot: dict) -> None:
+        with self.connect() as connection:
+            connection.execute(
+                "INSERT OR REPLACE INTO snapshots(run_id, completed_at, payload) VALUES (?, ?, ?)",
+                (snapshot["run_id"], snapshot["completed_at"], json.dumps(snapshot)),
+            )
+
+    def latest_snapshot(self) -> dict | None:
+        with self.connect() as connection:
+            row = connection.execute(
+                "SELECT payload FROM snapshots ORDER BY completed_at DESC LIMIT 1"
+            ).fetchone()
+        return json.loads(row["payload"]) if row is not None else None
 
     def save_completed_run(self, decisions: list[Decision]) -> str:
         run_id = uuid.uuid4().hex

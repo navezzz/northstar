@@ -26,7 +26,10 @@ For offline development, generate a deterministic demonstration snapshot:
 If `uv` is installed, `uv sync --extra dev` and `uv run northstar ...` are
 equivalent alternatives.
 
-See [`docs/MVP.md`](docs/MVP.md) and [`docs/OPERATIONS.md`](docs/OPERATIONS.md).
+See [`docs/MVP.md`](docs/MVP.md),
+[`docs/STRATEGIES.md`](docs/STRATEGIES.md), and
+[`docs/design/RESEARCH_FOUNDATION.md`](docs/design/RESEARCH_FOUNDATION.md), plus
+[`docs/OPERATIONS.md`](docs/OPERATIONS.md).
 
 ## GitHub Pages
 
