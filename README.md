@@ -31,5 +31,5 @@ See [`docs/MVP.md`](docs/MVP.md) and [`docs/OPERATIONS.md`](docs/OPERATIONS.md).
 ## GitHub Pages
 
 Northstar includes a scheduled Pages deployment. It refreshes real Yahoo data
-at 5:37 PM Eastern on weekdays and can also be launched manually from GitHub
+at 4:37 PM Eastern on weekdays and can also be launched manually from GitHub
 Actions. See [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md).

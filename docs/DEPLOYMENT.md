@@ -3,7 +3,7 @@
 ## Phase 1: GitHub Pages
 
 The workflow in `.github/workflows/pages.yml` runs on pushes to `main`, on a
-manual dispatch, and at 5:37 PM America/New_York every weekday. The non-round
+manual dispatch, and at 4:37 PM America/New_York every weekday. The non-round
 minute reduces the likelihood of GitHub's top-of-hour scheduler congestion.
 
 Each run installs Northstar, fetches daily Yahoo bars, evaluates the watchlist,
