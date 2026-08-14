@@ -11,6 +11,7 @@ rather than silently drifting in code.
 
 Related documents:
 
+- [Loop-engineering playbook](LOOP_ENGINEERING_PLAYBOOK.md)
 - [Research foundation](RESEARCH_FOUNDATION.md)
 - [Strategy and backtest design](../STRATEGIES.md)
 - [MVP implementation notes](../MVP.md)

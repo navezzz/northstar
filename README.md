@@ -28,7 +28,9 @@ equivalent alternatives.
 
 Start with the canonical
 [`V0 platform vision`](docs/design/V0_PLATFORM_VISION.md). Implementation
-details are in [`docs/MVP.md`](docs/MVP.md),
+work is organized by the
+[`loop-engineering playbook`](docs/design/LOOP_ENGINEERING_PLAYBOOK.md).
+Implementation details are in [`docs/MVP.md`](docs/MVP.md),
 [`docs/STRATEGIES.md`](docs/STRATEGIES.md), and
 [`docs/design/RESEARCH_FOUNDATION.md`](docs/design/RESEARCH_FOUNDATION.md), plus
 [`docs/OPERATIONS.md`](docs/OPERATIONS.md).
