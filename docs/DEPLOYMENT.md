@@ -6,9 +6,14 @@ The workflow in `.github/workflows/pages.yml` runs on pushes to `main`, on a
 manual dispatch, and at 4:37 PM America/New_York every weekday. The non-round
 minute reduces the likelihood of GitHub's top-of-hour scheduler congestion.
 
-Each run installs Northstar, fetches daily Yahoo bars, evaluates the watchlist,
-builds `site/`, and deploys that directory as a GitHub Pages artifact. Generated
-market data is not committed to Git.
+Each run installs Northstar, stores raw Yahoo bars and corporate actions,
+normalizes and validates them, creates a content-addressed dataset snapshot,
+evaluates the strategy offline from that snapshot, and deploys `site/` as a
+GitHub Pages artifact. Generated market data is not committed to Git.
+
+GitHub runners are ephemeral. The dataset ID and manifest provenance are
+published with the research result, but long-term Parquet archival requires
+persistent Phase 2 storage.
 
 The published site is read-only. It has no server process, credentials, account
 state, or order execution. Both the calculation timestamp and each ticker's

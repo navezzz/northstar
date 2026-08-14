@@ -13,6 +13,10 @@ python3 -m venv .venv
 # Fetch current Yahoo daily bars and calculate a snapshot
 .venv/bin/northstar daily-run --watchlist AAPL,MSFT,NVDA
 
+# Build a validated, content-addressed offline dataset
+.venv/bin/northstar data sync --years 10
+.venv/bin/northstar data snapshot
+
 # Serve the API and dashboard
 .venv/bin/northstar serve --reload
 
@@ -33,6 +37,7 @@ Copy `.env.example` values into your shell or scheduler environment. Northstar
 does not load `.env` automatically in the MVP.
 
 - `NORTHSTAR_DB_PATH`: SQLite database location
+- `NORTHSTAR_DATA_ROOT`: raw, normalized, action, and snapshot data location
 - `NORTHSTAR_WATCHLIST`: optional comma-separated universe override
 - `NORTHSTAR_PORTFOLIO_VALUE`: starting cash for backtest and paper replay
 - `NORTHSTAR_RISK_PCT`: maximum portfolio risk budget per entry
@@ -45,9 +50,10 @@ does not load `.env` automatically in the MVP.
 
 ## Scheduling
 
-Run `northstar daily-run` once per US trading day after finalized bars are
-available, initially around 4:30 PM Eastern. A production scheduler should use a
-US exchange calendar rather than weekday-only logic.
+Run the data refresh after finalized bars are available. Validation uses the
+XNYS exchange calendar and considers the current session complete after 4:30 PM
+Eastern. The GitHub scheduler remains weekday-based, but holiday runs resolve
+the latest expected exchange session correctly.
 
 The pipeline writes decisions in one SQLite transaction. The API only selects
 completed runs, so an interrupted refresh cannot partially replace the visible
@@ -58,6 +64,5 @@ generated market data to the repository. See `DEPLOYMENT.md`.
 
 ## Safety
 
-The suggested share count is a mathematical risk ceiling, not a recommendation.
 Stops can execute away from their trigger price during gaps or fast markets.
 Keep the dashboard's data timestamp visible and do not act on stale runs.

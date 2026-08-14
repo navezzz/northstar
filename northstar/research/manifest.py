@@ -17,12 +17,21 @@ def _canonical_hash(payload: object) -> str:
     return hashlib.sha256(encoded.encode()).hexdigest()
 
 
+def table_fingerprint(frame: pd.DataFrame) -> str:
+    """Hash an ordered table, including its index, columns, and values."""
+    canonical = frame.sort_index().sort_index(axis=1)
+    values = pd.util.hash_pandas_object(canonical, index=True).values.tobytes()
+    columns = json.dumps([str(column) for column in canonical.columns], separators=(",", ":"))
+    digest = hashlib.sha256()
+    digest.update(columns.encode())
+    digest.update(values)
+    return digest.hexdigest()
+
+
 def frame_fingerprint(frame: pd.DataFrame) -> str:
     """Hash canonical OHLCV values and dates without serializing the full dataset."""
     columns = [column for column in REQUIRED_OHLCV_COLUMNS if column in frame]
-    canonical = frame.loc[:, columns].sort_index()
-    values = pd.util.hash_pandas_object(canonical, index=True).values.tobytes()
-    return hashlib.sha256(values).hexdigest()
+    return table_fingerprint(frame.loc[:, columns])
 
 
 def dataset_manifest(
@@ -70,6 +79,7 @@ def build_run_manifest(
         "strategy_id": strategy_id,
         "strategy_version": strategy_version,
         "dataset_id": dataset["id"],
+        "dataset_snapshot_id": dataset.get("source_snapshot_id"),
         "execution": asdict(execution),
         "portfolio": asdict(portfolio),
         "start": start,

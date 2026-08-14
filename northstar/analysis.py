@@ -80,6 +80,9 @@ def build_dashboard_snapshot(
             **common,
         )
         strategy_dataset = dataset_manifest(strategy_bars, "SPY", spy_bars)
+        source_snapshot_id = getattr(provider, "dataset_snapshot_id", None)
+        if source_snapshot_id:
+            strategy_dataset["source_snapshot_id"] = source_snapshot_id
         manifest = build_run_manifest(
             strategy_id=strategy.id,
             strategy_version=strategy.version,

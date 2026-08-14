@@ -31,8 +31,9 @@ Start with the canonical
 work is organized by the
 [`loop-engineering playbook`](docs/design/LOOP_ENGINEERING_PLAYBOOK.md).
 Implementation details are in [`docs/MVP.md`](docs/MVP.md),
-[`docs/STRATEGIES.md`](docs/STRATEGIES.md), and
-[`docs/design/RESEARCH_FOUNDATION.md`](docs/design/RESEARCH_FOUNDATION.md), plus
+[`docs/STRATEGIES.md`](docs/STRATEGIES.md),
+[`docs/design/RESEARCH_FOUNDATION.md`](docs/design/RESEARCH_FOUNDATION.md),
+[`docs/design/MARKET_DATA_FOUNDATION.md`](docs/design/MARKET_DATA_FOUNDATION.md), and
 [`docs/OPERATIONS.md`](docs/OPERATIONS.md).
 
 ## GitHub Pages

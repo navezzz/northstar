@@ -16,6 +16,7 @@ class Settings:
     watchlist: tuple[str, ...]
     portfolio_value: float
     risk_pct: float
+    data_root: Path = _project_root() / "data" / "market"
     max_positions: int = 5
     max_position_pct: float = 0.20
     slippage_bps: float = 10.0
@@ -27,6 +28,10 @@ class Settings:
     def from_env(cls) -> Settings:
         raw_path = Path(os.getenv("NORTHSTAR_DB_PATH", "data/northstar.db"))
         db_path = raw_path if raw_path.is_absolute() else _project_root() / raw_path
+        raw_data_root = Path(os.getenv("NORTHSTAR_DATA_ROOT", "data/market"))
+        data_root = (
+            raw_data_root if raw_data_root.is_absolute() else _project_root() / raw_data_root
+        )
         watchlist = tuple(
             symbol.strip().upper()
             for symbol in os.getenv(
@@ -39,6 +44,7 @@ class Settings:
             watchlist=watchlist,
             portfolio_value=float(os.getenv("NORTHSTAR_PORTFOLIO_VALUE", "10000")),
             risk_pct=float(os.getenv("NORTHSTAR_RISK_PCT", "0.01")),
+            data_root=data_root,
             max_positions=int(os.getenv("NORTHSTAR_MAX_POSITIONS", "5")),
             max_position_pct=float(os.getenv("NORTHSTAR_MAX_POSITION_PCT", "0.20")),
             slippage_bps=float(os.getenv("NORTHSTAR_SLIPPAGE_BPS", "10")),

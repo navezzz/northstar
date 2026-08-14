@@ -48,7 +48,7 @@ class DataQualityError(ValueError):
         super().__init__(f"Market data validation failed: {summary}")
 
 
-def _validate_frame(symbol: str, frame: pd.DataFrame, min_rows: int) -> list[DataIssue]:
+def validate_ohlcv_frame(symbol: str, frame: pd.DataFrame, min_rows: int) -> list[DataIssue]:
     issues: list[DataIssue] = []
     if frame.empty:
         return [DataIssue("ERROR", "EMPTY", symbol, "No market data rows")]
@@ -147,7 +147,7 @@ def validate_market_data(
     all_frames = {**bars_by_symbol, benchmark_symbol: benchmark_bars}
     issues: list[DataIssue] = []
     for symbol, frame in sorted(all_frames.items()):
-        issues.extend(_validate_frame(symbol, frame, min_rows))
+        issues.extend(validate_ohlcv_frame(symbol, frame, min_rows))
 
     nonempty = [frame for frame in all_frames.values() if not frame.empty]
     first = min((frame.index.min() for frame in nonempty), default=None)

@@ -12,6 +12,7 @@ rather than silently drifting in code.
 Related documents:
 
 - [Loop-engineering playbook](LOOP_ENGINEERING_PLAYBOOK.md)
+- [Market-data foundation](MARKET_DATA_FOUNDATION.md)
 - [Research foundation](RESEARCH_FOUNDATION.md)
 - [Strategy and backtest design](../STRATEGIES.md)
 - [MVP implementation notes](../MVP.md)
@@ -320,8 +321,7 @@ class Strategy:
     identity: StrategyIdentity
     parameters: Mapping[str, object]
 
-    def generate_signals(self, context: StrategyContext) -> list[SignalIntent]:
-        ...
+    def generate_signals(self, context: StrategyContext) -> list[SignalIntent]: ...
 ```
 
 An intent may contain:

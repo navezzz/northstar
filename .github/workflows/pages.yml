@@ -31,7 +31,12 @@ jobs:
       - name: Install Northstar
         run: python -m pip install .
       - name: Build current dashboard snapshot
-        run: northstar export-site --provider yahoo --output site
+        shell: bash
+        run: |
+          northstar data sync --years 10
+          northstar data snapshot > /tmp/northstar-dataset.json
+          snapshot_id="$(jq -r '.snapshot_id' /tmp/northstar-dataset.json)"
+          northstar export-site --provider snapshot --snapshot-id "$snapshot_id" --output site
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Upload Pages artifact
